@@ -59,7 +59,7 @@ export const login=async(req,res)=>{
           maxAge: 7 * 24 * 60 * 60 * 1000, // MS
           secure: true,
           httpOnly: true, // prevent XSS attacks cross-site scripting attacks
-          sameSite: "strict", // CSRF attacks cross-site request forgery attacks
+          sameSite: "none", // CSRF attacks cross-site request forgery attacks
         });
         
         res.status(200).json({success:true,message:"Logged in successfully",user});
