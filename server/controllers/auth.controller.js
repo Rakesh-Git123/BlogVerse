@@ -85,6 +85,19 @@ export const logout = async (req, res) => {
   }
 };
 
+export const userProfile= async (req,res)=>{
+  try{
+    const userId=req.params.id;
+    const user=await User.findById(userId);
+    res.send(user)
+
+  }
+  catch (error) {
+    console.log("error in getting user profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 
 export const updateProfile = async (req, res) => {
   try {

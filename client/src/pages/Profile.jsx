@@ -21,9 +21,6 @@ const Profile = () => {
                     withCredentials: true,
                 });
                 setData(res.data);
-                if (res.data.length > 0) {
-                    setUserInfo(res.data[0].author);
-                }
                 setLoading(false);
             } catch (err) {
                 console.error("Failed to fetch blogs:", err);
@@ -31,6 +28,21 @@ const Profile = () => {
             }
         };
 
+        const userProfile=async()=>{
+            try{
+                const res=await axios.get(`https://blogverse-id8q.onrender.com/api/auth/profile/${userId}`,{
+                    withCredentials:true
+                })
+
+                setUserInfo(res)
+            }
+            catch (err) {
+                console.error("Failed to get user profile:", err);
+                setLoading(false);
+            }
+        }
+
+        userProfile();
         fetchMyBlogs();
     }, []);
 
