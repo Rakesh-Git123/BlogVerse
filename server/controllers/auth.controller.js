@@ -60,6 +60,7 @@ export const login=async(req,res)=>{
           secure: true,
           httpOnly: true, // prevent XSS attacks cross-site scripting attacks
           sameSite: "none", // CSRF attacks cross-site request forgery attacks
+          expires: new Date(0)
         });
         
         res.status(200).json({success:true,message:"Logged in successfully",user});
