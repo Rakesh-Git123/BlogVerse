@@ -14,8 +14,8 @@ const BlogDetail = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState("english");
     const [Description, setDescription] = useState("");
-    const [loading,setLoading] =useState(false);
-    const [sloading,setSloading] =useState(false);
+    const [loading, setLoading] = useState(false);
+    const [sloading, setSloading] = useState(false);
     const API_KEY = "AIzaSyAibuDiTvW5cj5_x0XKQv2c0S4s66XveHA";
 
     const [editTitle, setEditTitle] = useState("");
@@ -37,9 +37,9 @@ const BlogDetail = () => {
             const res = await axios.get(`https://blogverse-id8q.onrender.com/api/blog/${blogId}`, {
                 withCredentials: true,
             });
-             setApiData(res.data);
-             setDescription(res.data.blog.description)
-        
+            setApiData(res.data);
+            setDescription(res.data.blog.description)
+
         } catch (err) {
             setApiData({ error: "Error occurred" });
 
@@ -78,10 +78,10 @@ const BlogDetail = () => {
             const res = await axios.delete(`https://blogverse-id8q.onrender.com/api/blog/${blogId}`, {
                 withCredentials: true,
             });
-            if(res.data.success){
+            if (res.data.success) {
                 toast.success(res.data.message);
             }
-            else{
+            else {
                 toast.error(res.data.message)
             }
             navigate("/");
@@ -89,19 +89,19 @@ const BlogDetail = () => {
             console.error("Error deleting blog:", error);
         }
     };
-    
+
 
     const addComment = async () => {
         if (!comment.trim()) return alert("Comment cannot be empty");
-        const res=await axios.post(
+        const res = await axios.post(
             `https://blogverse-id8q.onrender.com/api/blog/${blogId}/comments`,
             { text: comment },
             { withCredentials: true }
         );
-        if(res.data.success){
+        if (res.data.success) {
             toast.success(res.data.message);
         }
-        else{
+        else {
             toast.error(res.data.message)
         }
         setComment("");
@@ -109,13 +109,13 @@ const BlogDetail = () => {
     };
 
     const deleteComment = async (commentId) => {
-        const res=await axios.delete(`https://blogverse-id8q.onrender.com/api/blog/${blogId}/comments/${commentId}`, {
+        const res = await axios.delete(`https://blogverse-id8q.onrender.com/api/blog/${blogId}/comments/${commentId}`, {
             withCredentials: true,
         });
-        if(res.data.success){
+        if (res.data.success) {
             toast.success(res.data.message);
         }
-        else{
+        else {
             toast.error(res.data.message)
         }
         fetchBlog();
@@ -152,8 +152,8 @@ const BlogDetail = () => {
                 formData.append("image", editImage);
             }
 
-            const res=await axios.put(
-                `http://localhost:4000/api/blog/${blogId}`,
+            const res = await axios.put(
+                `https://blogverse-id8q.onrender.com/api/blog/${blogId}`,
                 formData,
                 {
                     withCredentials: true,
@@ -162,10 +162,10 @@ const BlogDetail = () => {
                     },
                 }
             );
-            if(res.data.success){
+            if (res.data.success) {
                 toast.success(res.data.message);
             }
-            else{
+            else {
                 toast.error(res.data.message)
             }
             setShowModal(false);
@@ -178,92 +178,92 @@ const BlogDetail = () => {
     const handleLanguageChange = async (e) => {
         const lang = e.target.value;
         setSelectedLanguage(lang);
-      
-      
+
+
         try {
             const response = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  contents: [
-                    {
-                      parts: [
-                        {
-                          text: `Translate this blog ${Description} into ${lang} and dont give anything extra just translate`
-                        }
-                      ]
-                    }
-                  ]
-                })
-              }
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                parts: [
+                                    {
+                                        text: `Translate this blog ${Description} into ${lang} and dont give anything extra just translate`
+                                    }
+                                ]
+                            }
+                        ]
+                    })
+                }
             );
-        
+
             const data = await response.json();
-        
+
             const translated =
-              data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-        
+                data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
             if (translated) {
-              setDescription(translated);
-              toast.success("Translated");
+                setDescription(translated);
+                toast.success("Translated");
             } else {
-              toast.error("Cannot translate the description");
+                toast.error("Cannot translate the description");
             }
-          } catch (error) {
+        } catch (error) {
             console.error(error);
             toast.error("Error translate description.");
-          } finally {
-        
-          }
-      };
+        } finally {
 
-      const summarize=async()=>{
+        }
+    };
+
+    const summarize = async () => {
         setSloading(true);
         try {
             const response = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  contents: [
-                    {
-                      parts: [
-                        {
-                          text: `Summarize this blog ${Description} in the given language  and dont give anything extra just summarize and if there are 200 words that dont summarize more just give the same description `
-                        }
-                      ]
-                    }
-                  ]
-                })
-              }
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                parts: [
+                                    {
+                                        text: `Summarize this blog ${Description} in the given language  and dont give anything extra just summarize and if there are 200 words that dont summarize more just give the same description `
+                                    }
+                                ]
+                            }
+                        ]
+                    })
+                }
             );
-        
+
             const data = await response.json();
-        
+
             const summarized =
-              data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-        
+                data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
             if (summarized) {
-              setDescription(summarized);
-              toast.success("Summarized");
+                setDescription(summarized);
+                toast.success("Summarized");
             } else {
-              toast.error("Cannot summarize the description");
+                toast.error("Cannot summarize the description");
             }
         } catch (error) {
             console.error(error);
             toast.error("Error summarizing the description.");
-        } 
+        }
         setSloading(false)
-        
-      }
-      
+
+    }
+
 
     useEffect(() => {
         fetchBlog();
@@ -275,154 +275,157 @@ const BlogDetail = () => {
         <>
             <div
                 className={`min-h-screen py-8 px-4 md:px-12 ${theme === "dark"
-                        ? "bg-gray-900 text-white"
-                        : "bg-gray-50 text-gray-800"
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-50 text-gray-800"
                     }`}
             >
-                {loading?<Loading/>:
-                <>
-                <div
-                    className={`max-w-3xl mx-auto shadow-md rounded-lg p-6 space-y-6 ${theme === "dark"
-                            ? "bg-gray-800 text-white"
-                            : "bg-white text-gray-800"
-                        }`}
-                >
-                    {/* Title + Edit/Delete */}
-                    {Object.keys(apiData).length>0?
+                {loading ? <Loading /> :
                     <>
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-3xl font-bold">{apiData.blog.title}</h1>
-                        {apiData.user === apiData.blog.author._id && (
-                            <div className="flex space-x-4 text-xl">
-                                <i
-                                    className="bx bxs-edit cursor-pointer hover:text-blue-400"
-                                    onClick={handleEditClick}
-                                ></i>
-                                <i
-                                    className="fa-solid fa-trash cursor-pointertet text-[18px] hover:text-red-600 cursor-pointer"
-                                    onClick={() => deleteBlog(apiData.blog._id)}
-                                ></i>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Author + Date */}
-                    <div className="text-sm text-gray-500">
-                        Author:{" "}
-                        <span className="text-red-500 font-medium cursor-pointer" onClick={()=>navigate(`/profile/${apiData.blog.author._id}`)}>
-                            @{apiData.blog.author.fullName}
-                        </span>{" "}
-                        •{" "}
-                        {`${monthNames[new Date(apiData.blog.date).getMonth()].slice(
-                            0,
-                            3
-                        )} ${new Date(apiData.blog.date).getDate()}, ${new Date(
-                            apiData.blog.date
-                        ).getFullYear()}`}
-                    </div>
-
-                    {/* Image */}
-                    <img
-                        src={apiData.blog.image}
-                        alt={apiData.blog.title}
-                        className="w-full max-h-[500px] object-contain rounded-lg"
-                    />
-
-                    {/* Translate & Summarize Buttons */}
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                            <label htmlFor="lang" className="text-sm font-medium">
-                                Translate:
-                            </label>
-                            <select
-                                id="lang"
-                                className="border px-2 py-1 rounded-md text-sm dark:bg-gray-700 dark:border-gray-600"
-                                onChange={handleLanguageChange}
-                                value={selectedLanguage}
-                            >
-                                <option value="english">English</option>
-                                <option value="hindi">Hindi</option>
-                            </select>
-                        </div>
-                        <button
-                            className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-sm cursor-pointer"
-                            onClick={summarize}
+                        <div
+                            className={`max-w-3xl mx-auto shadow-md rounded-lg p-6 space-y-6 ${theme === "dark"
+                                ? "bg-gray-800 text-white"
+                                : "bg-white text-gray-800"
+                                }`}
                         >
-                            {sloading?"Summarizing...":"Summarize"}
-                        </button>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-md leading-relaxed">{Description || blog.description}</p>
-                    <i
-                        className={`fa-solid fa-thumbs-up cursor-pointer text-xl transition-colors duration-300 ${liked ? "text-red-600" : "text-gray-400"
-                            }`}
-                        onClick={toggleLike}
-                    />{" "}
-                    <span>{like}</span>
-
-                    {/* Comments Section */}
-                    <div>
-                        <h2 className="text-xl font-semibold mb-4">Comments</h2>
-                        <div className="space-y-4">
-                            {apiData.blog.comments.map((c, i) => (
-                                <div
-                                    key={i}
-                                    className={`relative border p-4 pr-10 rounded-md ${theme === "dark"
-                                            ? "bg-gray-700 border-gray-600"
-                                            : "bg-gray-100"
-                                        }`}
-                                >
-                                    {apiData.user === c.author._id && (
-                                        <button
-                                            className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-                                            onClick={() => deleteComment(c._id)}
-                                            aria-label="Delete Comment"
-                                        >
-                                            <i className="fa-solid fa-trash cursor-pointer"></i>
-                                        </button>
-                                    )}
-                                    <div className="flex items-center gap-4 text-sm mb-2">
-                                        <span className="font-medium">@{c.author.fullName}</span>
-                                        <span className="text-xs text-gray-400">
-                                            {`${monthNames[new Date(c.date).getMonth()].slice(
-                                                0,
-                                                3
-                                            )} ${new Date(c.date).getDate()}, ${new Date(
-                                                c.date
-                                            ).getFullYear()}`}
-                                        </span>
+                            {/* Title + Edit/Delete */}
+                            {Object.keys(apiData).length > 0 ?
+                                <>
+                                    <div className="flex justify-between items-center">
+                                        <h1 className="text-3xl font-bold">{apiData.blog.title}</h1>
+                                        {apiData.user === apiData.blog.author._id && (
+                                            <div className="flex space-x-4 text-xl">
+                                                <i
+                                                    className="bx bxs-edit cursor-pointer hover:text-blue-400"
+                                                    onClick={handleEditClick}
+                                                ></i>
+                                                <i
+                                                    className="fa-solid fa-trash cursor-pointertet text-[18px] hover:text-red-600 cursor-pointer"
+                                                    onClick={() => deleteBlog(apiData.blog._id)}
+                                                ></i>
+                                            </div>
+                                        )}
                                     </div>
-                                    <p>{c.text}</p>
-                                </div>
-                            ))}
-                
-                        </div>
 
-                        {/* Add Comment */}
-                        <div className="mt-6 flex gap-3">
-                            <input
-                                type="text"
-                                placeholder="Write a comment..."
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                className={`flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${theme === "dark"
-                                        ? "bg-gray-700 text-white border-gray-600"
-                                        : ""
-                                    }`}
-                            />
-                            <button
-                                onClick={addComment}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer"
-                            >
-                                Add
-                            </button>
+                                    {/* Author + Date */}
+                                    <div className="text-sm text-gray-500">
+                                        Author:{" "}
+                                        <span className="text-red-500 font-medium cursor-pointer" onClick={() => navigate(`/profile/${apiData.blog.author._id}`)}>
+                                            @{apiData.blog.author.fullName}
+                                        </span>{" "}
+                                        •{" "}
+                                        {`${monthNames[new Date(apiData.blog.date).getMonth()].slice(
+                                            0,
+                                            3
+                                        )} ${new Date(apiData.blog.date).getDate()}, ${new Date(
+                                            apiData.blog.date
+                                        ).getFullYear()}`}
+                                    </div>
+
+                                    {/* Image */}
+                                    <img
+                                        src={apiData.blog.image}
+                                        alt={apiData.blog.title}
+                                        className="w-full max-h-[500px] object-contain rounded-lg"
+                                    />
+
+                                    {/* Translate & Summarize Buttons */}
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex items-center gap-2">
+                                            <label htmlFor="lang" className="text-sm font-medium">
+                                                Translate:
+                                            </label>
+                                            <select
+                                                id="lang"
+                                                className="border px-2 py-1 rounded-md text-sm dark:bg-gray-700 dark:border-gray-600"
+                                                onChange={handleLanguageChange}
+                                                value={selectedLanguage}
+                                            >
+                                                <option value="english">English</option>
+                                                <option value="hindi">Hindi</option>
+                                            </select>
+                                        </div>
+                                        <button
+                                            className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-sm cursor-pointer"
+                                            onClick={summarize}
+                                        >
+                                            {sloading ? "Summarizing..." : "Summarize"}
+                                        </button>
+                                    </div>
+
+                                    {/* Description */}
+                                    <p className="text-md leading-relaxed">{Description || blog.description}</p>
+                                    <i
+                                        className={`fa-solid fa-thumbs-up cursor-pointer text-xl transition-colors duration-300 ${liked ? "text-red-600" : "text-gray-400"
+                                            }`}
+                                        onClick={toggleLike}
+                                    />{" "}
+                                    <span>{like}</span>
+
+                                    {/* Comments Section */}
+                                    <div>
+                                        <h2 className="text-xl font-semibold mb-4">Comments</h2>
+                                        <div className="space-y-4">
+                                            {apiData.blog.comments.map((c, i) => (
+                                                <div
+                                                    key={i}
+                                                    className={`relative border p-4 pr-10 rounded-md ${theme === "dark"
+                                                        ? "bg-gray-700 border-gray-600"
+                                                        : "bg-gray-100"
+                                                        }`}
+                                                >
+                                                    {apiData.user === c.author._id && (
+                                                        <button
+                                                            className="absolute top-2 right-2 text-red-600 hover:text-red-800"
+                                                            onClick={() => deleteComment(c._id)}
+                                                            aria-label="Delete Comment"
+                                                        >
+                                                            <i className="fa-solid fa-trash cursor-pointer"></i>
+                                                        </button>
+                                                    )}
+                                                    <div className="flex items-center gap-4 text-sm mb-2">
+                                                        <span className="font-medium">@{c.author.fullName}</span>
+                                                        <span className="text-xs text-gray-400">
+                                                            {`${monthNames[new Date(c.date).getMonth()].slice(
+                                                                0,
+                                                                3
+                                                            )} ${new Date(c.date).getDate()}, ${new Date(
+                                                                c.date
+                                                            ).getFullYear()}`}
+                                                        </span>
+                                                    </div>
+                                                    <p>{c.text}</p>
+                                                </div>
+                                            ))}
+
+                                        </div>
+
+                                        {/* Add Comment */}
+                                        <div className="mt-6">
+                                            <div className="flex flex-wrap gap-3">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Write a comment..."
+                                                    value={comment}
+                                                    onChange={(e) => setComment(e.target.value)}
+                                                    className={`flex-1 min-w-[200px] px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${theme === "dark"
+                                                            ? "bg-gray-700 text-white border-gray-600"
+                                                            : ""
+                                                        }`}
+                                                />
+                                                <button
+                                                    onClick={addComment}
+                                                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer"
+                                                >
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </> : <></>
+                            }
                         </div>
-                    </div>
-                    </>:<></>
-}
-                </div>
-                </>
+                    </>
                 }
             </div>
 
@@ -513,7 +516,7 @@ const BlogDetail = () => {
                             </button>
                         </div>
                     </div>
-                
+
                 </div>
             )}
         </>

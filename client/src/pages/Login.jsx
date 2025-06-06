@@ -17,7 +17,7 @@ const Login = () => {
                 }}>
 
                     <div className="input-group">
-                        <label for="email">Username</label>
+                        <label for="email">Email</label>
                         <input type="email" name="email" id="email" placeholder="" onChange={(e) => setEmail(e.target.value)} required />
                     </div>
                     <div className="input-group">
