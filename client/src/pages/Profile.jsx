@@ -33,8 +33,7 @@ const Profile = () => {
                 const res=await axios.get(`https://blogverse-id8q.onrender.com/api/auth/profile/${userId}`,{
                     withCredentials:true
                 })
-
-                setUserInfo(res)
+                setUserInfo(res.data)
             }
             catch (err) {
                 console.error("Failed to get user profile:", err);
