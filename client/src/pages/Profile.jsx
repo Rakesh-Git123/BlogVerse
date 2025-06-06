@@ -17,7 +17,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchMyBlogs = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/api/blog/user/${userId}`, {
+                const res = await axios.get(`https://blogverse-id8q.onrender.com/api/blog/user/${userId}`, {
                     withCredentials: true,
                 });
                 setData(res.data);
