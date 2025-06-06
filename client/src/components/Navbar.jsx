@@ -46,7 +46,7 @@ const Navbar = () => {
 
     const logout = async () => {
         try {
-            let res = await axios.post("http://localhost:4000/api/auth/logout",
+            let res = await axios.post("https://blogverse-id8q.onrender.com/api/auth/logout",
                 {},
                 {
                     withCredentials: true,
