@@ -89,7 +89,7 @@ const AddBlog = () => {
     data.append("image", formData.image);
 
     try {
-      const res = await axios.post("http://localhost:4000/api/blog/", data, {
+      const res = await axios.post("https://blogverse-id8q.onrender.com/api/blog/", data, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });

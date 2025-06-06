@@ -37,7 +37,7 @@ const UpdateProfile = () => {
     }
 
     try {
-      await axios.put("http://localhost:4000/api/auth/update-profile", formData, {
+      await axios.put("https://blogverse-id8q.onrender.com/api/auth/update-profile", formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",

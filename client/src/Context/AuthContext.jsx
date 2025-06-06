@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            const res = await axios.post("http://localhost:4000/api/auth/signup", userData, {
+            const res = await axios.post("https://blogverse-id8q.onrender.com/api/auth/signup", userData, {
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const res = await axios.post("http://localhost:4000/api/auth/login", userData, {
+            const res = await axios.post("https://blogverse-id8q.onrender.com/api/auth/login", userData, {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "application/json"
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuth = async () => {
         try {
-            const res = await axios.get("http://localhost:4000/api/auth/check", {
+            const res = await axios.get("https://blogverse-id8q.onrender.com/api/auth/check", {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "application/json"

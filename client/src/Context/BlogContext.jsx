@@ -10,7 +10,7 @@ export const BlogProvider = ({ children }) => {
   const fetchBlogs = async () => {
     try {
         setLoading(true);
-      const res = await axios.get('http://localhost:4000/api/blog'); 
+      const res = await axios.get('https://blogverse-id8q.onrender.com/api/blog'); 
       setBlogs(res.data);
       setFilteredBlogs(res.data);
     } catch (err) {

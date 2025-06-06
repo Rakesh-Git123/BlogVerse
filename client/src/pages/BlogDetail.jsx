@@ -34,7 +34,7 @@ const BlogDetail = () => {
     const fetchBlog = async () => {
         setLoading(true)
         try {
-            const res = await axios.get(`http://localhost:4000/api/blog/${blogId}`, {
+            const res = await axios.get(`https://blogverse-id8q.onrender.com/api/blog/${blogId}`, {
                 withCredentials: true,
             });
              setApiData(res.data);
@@ -50,7 +50,7 @@ const BlogDetail = () => {
     const toggleLike = async () => {
         try {
             const res = await axios.post(
-                `http://localhost:4000/api/blog/like/${blogId}`,
+                `https://blogverse-id8q.onrender.com/api/blog/like/${blogId}`,
                 {},
                 { withCredentials: true }
             );
@@ -63,7 +63,7 @@ const BlogDetail = () => {
 
     const getLikeStatus = async () => {
         try {
-            const res = await axios.get(`http://localhost:4000/api/blog/like/${blogId}`, {
+            const res = await axios.get(`https://blogverse-id8q.onrender.com/api/blog/like/${blogId}`, {
                 withCredentials: true,
             });
             setLike(res.data.likes);
@@ -75,7 +75,7 @@ const BlogDetail = () => {
 
     const deleteBlog = async (blogId) => {
         try {
-            const res = await axios.delete(`http://localhost:4000/api/blog/${blogId}`, {
+            const res = await axios.delete(`https://blogverse-id8q.onrender.com/api/blog/${blogId}`, {
                 withCredentials: true,
             });
             if(res.data.success){
@@ -94,7 +94,7 @@ const BlogDetail = () => {
     const addComment = async () => {
         if (!comment.trim()) return alert("Comment cannot be empty");
         const res=await axios.post(
-            `http://localhost:4000/api/blog/${blogId}/comments`,
+            `https://blogverse-id8q.onrender.com/api/blog/${blogId}/comments`,
             { text: comment },
             { withCredentials: true }
         );
@@ -109,7 +109,7 @@ const BlogDetail = () => {
     };
 
     const deleteComment = async (commentId) => {
-        const res=await axios.delete(`http://localhost:4000/api/blog/${blogId}/comments/${commentId}`, {
+        const res=await axios.delete(`https://blogverse-id8q.onrender.com/api/blog/${blogId}/comments/${commentId}`, {
             withCredentials: true,
         });
         if(res.data.success){
