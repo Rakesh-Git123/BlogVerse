@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { ThemeContext } from "../Context/ThemeContext";
-import { AuthContext } from "../Context/AuthContext";
 import Loading from "../components/Loading";
 import { useParams } from "react-router-dom";
 
 const Profile = () => {
     const { theme } = useContext(ThemeContext);
-    const { user } = useContext(AuthContext);
     const { userId } = useParams();
 
     const [data, setData] = useState([]);
