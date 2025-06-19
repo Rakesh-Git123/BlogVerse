@@ -57,7 +57,8 @@
 
 --- 
 
-🙋‍♂️ Developed By
+## 🙋‍♂️ Developed By
+
 **Rakesh Kumar**  
 B.Tech CSE, Lovely Professional University  
 Full-Stack Developer
