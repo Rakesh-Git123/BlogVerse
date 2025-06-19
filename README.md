@@ -58,8 +58,8 @@
 --- 
 
 🙋‍♂️ Developed By
-Rakesh Kumar
-B.Tech CSE, Lovely Professional University
+**Rakesh Kumar**  
+B.Tech CSE, Lovely Professional University  
 Full-Stack Developer
 
 
